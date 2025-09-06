@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RRU Connect - Find Your Perfect Match</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>RRU Connect</span>
+            </div>
+            <nav class="nav" id="nav">
+                <a href="#" onclick="showSection('discover')">Discover</a>
+                <a href="#" onclick="showSection('matches')">Matches</a>
+                <a href="#" onclick="showSection('messages')">Messages</a>
+                <a href="#" onclick="showSection('profile')">Profile</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </nav>
+            <div class="hamburger" onclick="toggleNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login/Signup Section -->
+    <section id="auth-section" class="auth-section">
+        <div class="auth-container">
+            <div class="auth-form-container">
+                <div class="auth-toggle">
+                    <button class="auth-btn active" onclick="showAuthForm('login')">Login</button>
+                    <button class="auth-btn" onclick="showAuthForm('signup')">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form">
+                    <h2>Welcome Back!</h2>
+                    <div class="form-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="login-email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="login-password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signup-form" class="auth-form" style="display: none;">
+                    <h2>Join RRU Connect</h2>
+                    <div class="form-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="signup-name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="signup-email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="signup-password" placeholder="Password" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-calendar"></i>
+                        <input type="number" id="signup-age" placeholder="Age" min="18" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-venus-mars"></i>
+                        <select id="signup-gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main App Section -->
+    <main id="app-section" class="app-section" style="display: none;">
+        
+        <!-- Discover Section -->
+        <section id="discover" class="section active">
+            <div class="container">
+                <div class="discover-container">
+                    <div class="card-stack">
+                        <div class="profile-card" id="current-card">
+                            <!-- Profile card content will be dynamically generated -->
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn reject" onclick="swipeCard('reject')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="action-btn super-like" onclick="swipeCard('super')">
+                            <i class="fas fa-star"></i>
+                        </button>
+                        <button class="action-btn like" onclick="swipeCard('like')">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Matches Section -->
+        <section id="matches" class="section">
+            <div class="container">
+                <h2>Your Matches</h2>
+                <div class="matches-grid" id="matches-grid">
+                    <!-- Matches will be dynamically generated -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Messages Section -->
+        <section id="messages" class="section">
+            <div class="container">
+                <div class="messages-container">
+                    <div class="conversations-list" id="conversations-list">
+                        <h3>Conversations</h3>
+                        <!-- Conversations will be dynamically generated -->
+                    </div>
+                    <div class="chat-area" id="chat-area">
+                        <div class="chat-placeholder">
+                            <i class="fas fa-comments"></i>
+                            <p>Select a conversation to start chatting</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="section">
+            <div class="container">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-image">
+                            <img id="profile-image" src="https://via.placeholder.com/150" alt="Profile">
+                            <div class="image-upload">
+                                <i class="fas fa-camera"></i>
+                                <input type="file" id="image-input" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profile-name">User Name</h2>
+                            <p id="profile-age">Age</p>
+                        </div>
+                    </div>
+                    
+                    <form id="profile-form" class="profile-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-name">Name</label>
+                                <input type="text" id="edit-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-age">Age</label>
+                                <input type="number" id="edit-age" min="18" max="100" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="edit-bio">Bio</label>
+                            <textarea id="edit-bio" rows="4" placeholder="Tell us about yourself..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="edit-interests">Interests (comma separated)</label>
+                            <input type="text" id="edit-interests" placeholder="Music, Travel, Food...">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-location">Location</label>
+                                <input type="text" id="edit-location" placeholder="City, Country">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-occupation">Occupation</label>
+                                <input type="text" id="edit-occupation" placeholder="Your job title">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Update Profile</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Match Popup -->
+    <div id="match-popup" class="match-popup">
+        <div class="match-content">
+            <h2>It's a Match! 🎉</h2>
+            <div class="match-profiles">
+                <div class="match-profile">
+                    <img id="match-user-image" src="" alt="Your match">
+                    <p id="match-user-name"></p>
+                </div>
+            </div>
+            <div class="match-actions">
+                <button onclick="closeMatchPopup()" class="btn-secondary">Keep Swiping</button>
+                <button onclick="sendMessage()" class="btn-primary">Send Message</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
